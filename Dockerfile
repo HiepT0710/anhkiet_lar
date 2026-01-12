@@ -23,11 +23,14 @@ WORKDIR /app
 # Copy composer files
 COPY composer.json composer.lock ./
 
-# Install dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Install dependencies (skip scripts that need artisan)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # Copy application files
 COPY . .
+
+# Run composer scripts now that artisan is available
+RUN composer dump-autoload --optimize --no-interaction
 
 # Generate key and optimize
 RUN php artisan key:generate --force || true
