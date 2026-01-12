@@ -3,6 +3,9 @@ nixPkgs = ["php82", "nodejs-18_x"]
 
 [phases.install]
 cmds = [
+    "curl -sS https://getcomposer.org/installer | php",
+    "mv composer.phar /usr/local/bin/composer",
+    "chmod +x /usr/local/bin/composer",
     "composer install --no-dev --optimize-autoloader --no-interaction --no-scripts",
     "composer dump-autoload --optimize --no-interaction || true"
 ]
