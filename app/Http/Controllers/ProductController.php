@@ -59,7 +59,7 @@ class ProductController extends Controller
         $normalizedImages = collect($productImages ?? [])->filter()->map(function ($imagePath) {
             return Str::startsWith($imagePath, ['http://', 'https://'])
                 ? $imagePath
-                : asset('storage/' . ltrim($imagePath, '/'));
+                : asset('storage/app/public/' . ltrim($imagePath, '/'));
         });
 
         $predefinedGallery = collect(config("product_gallery.{$product->slug}", []))
@@ -67,7 +67,7 @@ class ProductController extends Controller
             ->map(function ($imagePath) {
                 return Str::startsWith($imagePath, ['http://', 'https://'])
                     ? $imagePath
-                    : asset('storage/' . ltrim($imagePath, '/'));
+                    : asset('storage/app/public/' . ltrim($imagePath, '/'));
             });
 
         if ($predefinedGallery->isNotEmpty()) {
